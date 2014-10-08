@@ -13,4 +13,4 @@ def posts():
 	#use posts.all method to retrieve all the posts
 	posts = posts.all()
 	#render a template called posts.html, passing in all the posts
-	return render_template("posts.hmtl", posts=posts,)
+	return render_template("posts.html", posts=posts,)
