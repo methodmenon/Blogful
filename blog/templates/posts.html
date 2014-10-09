@@ -1,0 +1,11 @@
+<!-- first import the macros.html file-->
+<!--specify the template should inherit from the base.html-->
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+{% block content %}
+<!-- Loop through the posts, rendering each one using the render_post macro-->
+{% for post in posts %}
+{{ macros.render_post(post) }}
+{% endfor %}
+
+{% endblock %}
