@@ -3,6 +3,8 @@ from flask import render_template
 from blog import app
 from database import session
 from models import Post
+import mistune
+from flask import request, redirect, url_for
 
 @app.route("/")
 #new route created to take us to a specific page of content
@@ -45,3 +47,28 @@ def posts(page=1, paginate_by=10):
 		page=page,
 		total_pages=total_pages
 		)
+
+""" New view created to display the form, structured in add_post.html"""
+
+#methods["GET"] parameter in route decorator - specifies the route with ONLY BE USED for GET requests to the page
+@app.route("/post/add", methods=["GET"])
+def add_post_get():
+	return render_template("add_post.html")
+
+"""New view created to take our form data and create a new post"""
+
+#methods["POST"] paramter in route decorator - specifies the route will ONLY ACCEPT POST requests
+@app.route("/post/add", methods=["POST"])
+def add_post_post():
+	#create a new Post object
+	#use Flask's request.form dictionary --> access the data submitted with our form, and assign it to the correct fields in the post
+	#preprocess the content using mistune, a Markdown parser
+	# --> allows one to Markdown syntax in posts, making it simpler to write well formatted blog posts
+	post = Post(
+		title=request.form["title"],
+		content=mistune.markdown(request.form["content"]),
+		)
+	#add post to our session and commit to database
+	session.add(post)
+	session.commit()
+	return redirect(url_for("posts"))
