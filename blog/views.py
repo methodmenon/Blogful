@@ -19,7 +19,6 @@ def posts(page=1, paginate_by=10):
 
 	#use the count method of a Post query object to find total number of items
 	count = session.query(Post).count()
-	#use this data to calculate different pieces of information about the pagination
 
 	#the index of the first item we should see
 	start = page_index * paginate_by
@@ -61,14 +60,20 @@ def add_post_get():
 @app.route("/post/add", methods=["POST"])
 def add_post_post():
 	#create a new Post object
-	#use Flask's request.form dictionary --> access the data submitted with our form, and assign it to the correct fields in the post
-	#preprocess the content using mistune, a Markdown parser
-	# --> allows one to Markdown syntax in posts, making it simpler to write well formatted blog posts
 	post = Post(
+		#use Flask's request.form dictionary --> access the data submitted with our form, and assign it to the correct fields in the post
 		title=request.form["title"],
+		#preprocess the content using mistune, a Markdown parser
+		# --> allows one to Markdown syntax in posts, making it simpler to write well formatted blog posts
 		content=mistune.markdown(request.form["content"]),
 		)
 	#add post to our session and commit to database
 	session.add(post)
 	session.commit()
 	return redirect(url_for("posts"))
+
+@app.route("/post/<id>")
+def view_post(id=1):
+	post = session.query(Post).filter_by(id=id)
+	return render_template("single_post.html",
+		posts=posts)
