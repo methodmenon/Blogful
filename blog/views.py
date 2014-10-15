@@ -74,6 +74,7 @@ def add_post_post():
 
 @app.route("/post/<id>")
 def view_post(id=1):
-	post = session.query(Post).filter_by(id=id)
+	post = session.query(Post).filter(Post.id==id).first()
+	#post = session.query(Post).filter_by(id==id)
 	return render_template("single_post.html",
-		posts=posts)
+		post=post)
