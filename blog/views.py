@@ -73,7 +73,15 @@ def add_post_post():
 	return redirect(url_for("posts"))
 
 @app.route("/post/<id>")
-def view_post(id):
+def view_post(id=1):
 	post = session.query(Post).filter(Post.id==id).first()
 	return render_template("single_post.html",
 		post=post)
+
+@app.route("/post/<id>/edit", methods=["GET"])
+def edit_post_get(id=1):
+	post = session.query(Post).filter(Post.id==id).first()
+	title = post.title
+	content = post.content
+	return render_template("edit_post.html", title=title,
+		content=content)
