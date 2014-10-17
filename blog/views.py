@@ -79,9 +79,18 @@ def view_post(id=1):
 		post=post)
 
 @app.route("/post/<id>/edit", methods=["GET"])
-def edit_post_get(id=1):
+def edit_post_get(id):
 	post = session.query(Post).filter(Post.id==id).first()
 	title = post.title
 	content = post.content
 	return render_template("edit_post.html", title=title,
-		content=content)
+		content=content, post=post)
+
+@app.route("/post/<id>/edit", methods=["POST"])
+def edit_post_post(id):
+	#post = session.query(Post).filter(Post.id==id).first()
+	post.title = request.form["title"]
+	post.content = mistune.markdown(request.form["content"])
+	session.add(post)
+	session.commit()
+	return redirect(url_for("posts"))
