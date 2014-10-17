@@ -72,23 +72,23 @@ def add_post_post():
 	session.commit()
 	return redirect(url_for("posts"))
 
-@app.route("/post/<id>")
-def view_post(id=1):
-	post = session.query(Post).filter(Post.id==id).first()
+@app.route("/post/<int:post_id>")
+def view_post(post_id):
+	post = session.query(Post).filter(Post.id==post_id).first()
 	return render_template("single_post.html",
 		post=post)
 
-@app.route("/post/<id>/edit", methods=["GET"])
-def edit_post_get(id):
-	post = session.query(Post).filter(Post.id==id).first()
+@app.route("/post/<int:post_id>/edit", methods=["GET"])
+def edit_post_get(post_id):
+	post = session.query(Post).filter(Post.id==post_id).first()
 	title = post.title
 	content = post.content
 	return render_template("edit_post.html", title=title,
 		content=content, post=post)
 
-@app.route("/post/<id>/edit", methods=["POST"])
-def edit_post_post(id):
-	post = session.query(Post).filter(Post.id==id).first()
+@app.route("/post/<int:post_id>/edit", methods=["POST"])
+def edit_post_post(post_id):
+	post = session.query(Post).filter(Post.id==post_id).first()
 	post.title = request.form["title"]
 	post.content = mistune.markdown(request.form["content"])
 	#session.add(post)

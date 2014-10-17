@@ -11,18 +11,18 @@
                 <!-- dateformat filter to display the datetime in dd/mm/yy format -->
                 <!-- Jinja does not include date formatting filter by default,
                     so need to add this to filters.py -->
-                {( post.datetime|dateformat("%d/%m/%y") )}
+                {{ post.datetime|dateformat("%d/%m/%y") }}
             </li>
         </ul>
     </div>
     <div class="col-md-10">
         <h1>
-           <a href="{{url_for('view_post', id=post.id)}}">{( post.title )}</a>
+           <a href="{{url_for('view_post', post_id=post.id)}}">{{ post.title }}</a>
         </h1>
         <!--Safe filter is used on post content,
         allows us to inclue HTML in the post content, 
         without it being automatically escaped--> 
-        {( post.content|safe )}
+        {{ post.content|safe }}
     </div>
 </div>
 {% endmacro %}
@@ -31,8 +31,8 @@
 {% macro render_single_post(post) %}
 <div class="col-md-10">
     <h1>
-        <a href="{{url_for('view_post', id=post.id)}}">{( post.title )}</a>
+        <a href="{{url_for('view_post', post_id=post.id)}}">{{post.title}}</a>
     </h1>
-    {(post.content|safe)}
+    {{post.content|safe}}
 </div>
 {% endmacro %}
