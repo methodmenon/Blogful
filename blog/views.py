@@ -88,9 +88,9 @@ def edit_post_get(id):
 
 @app.route("/post/<id>/edit", methods=["POST"])
 def edit_post_post(id):
-	#post = session.query(Post).filter(Post.id==id).first()
+	post = session.query(Post).filter(Post.id==id).first()
 	post.title = request.form["title"]
 	post.content = mistune.markdown(request.form["content"])
-	session.add(post)
+	#session.add(post)
 	session.commit()
 	return redirect(url_for("posts"))
