@@ -3,7 +3,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{{macros.render_single_post(post)}}
+<div class="post">
+	{{macros.render_single_post(post)}}
+</div>
+<div class="edit">
+	<p>
+		<a href="{{url_for('edit_post_get', post_id=post.id)}}">Edit Post</a>
+	</p>
+</div>
 
 {% endblock %}
