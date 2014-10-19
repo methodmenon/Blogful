@@ -13,6 +13,12 @@
 <!-- End the loop -->
 {% endfor %}
 
+<ul class="add-post">
+	<li>
+		<a href="{{url_for('add_post_get')}}">Add Post</a>
+	</li>
+</ul>
+
 <!-- Adjusted posts.html template to display some buttons which will direct us to the next and previous pages -->
 <ul class="pager">
 	{% if has_prev %}

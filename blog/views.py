@@ -94,3 +94,10 @@ def edit_post_post(post_id):
 	#session.add(post)
 	session.commit()
 	return redirect(url_for("posts"))
+
+@app.route("/post/<int:post_id>/delete", methods=["GET"])
+def delete_post(post_id):
+	post = session.query(Post).filter(Post.id==post_id).delete()
+	session.commit()
+	return redirect(url_for("posts"))
+

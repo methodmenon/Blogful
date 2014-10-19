@@ -3,12 +3,11 @@ div.metadata {
 	font-size: 1.5em; 
 }
 
-.post {
-	display: block;
+div.post {
+	float:left;
 	clear: both;
 }
 
-.edit {
-	display: block;
-	clear: both;
+h2.edit {
+	float:left;
 }
