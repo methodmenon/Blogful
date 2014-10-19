@@ -101,3 +101,37 @@ def delete_post(post_id):
 	session.commit()
 	return redirect(url_for("posts"))
 
+#GET route for login
+@app.route("/login", methods=["GET"])
+def login_get():
+	return render_template("login.html")
+
+from flask import flash
+from flask.ext.login import login_user
+from werkzeug.security import check_password_hash
+from models import User
+
+#POST route for login
+@app.route("/login", methods=["POST"])
+def login_post():
+	"""we read the email address and password, which was entered by the user, from the requests.form dictionary"""
+	email = request.form["email"]
+	password = request.form["password"]
+	#query to find the user object with the matching email address
+	#then check the user exits
+	#and also compare (via check_password_hash function) the password enterd by the user with the hash stored in the database
+	user = session.query(User).filter_by(email=email).first()
+	if not user or not check_password_hash(user.password, password):
+		#flash function used to store a message which can be used when we render the next page
+		flash("Incorrect username or password", "danger")
+		#redirect user back to the login
+		return redirect(url_for("login_get"))
+
+	#login_user function--> sends a cookie(small chunk of data) to the user's browser which will be used to identify the user, which can be used for later for the user
+	login_user(user)
+	#after user is logged in, redirect the user
+	"""
+	1) normally redirected to the posts page, but if 
+	2) there is a next paramter in the URL's query string --> we redirect to that page 
+	"""
+	return redirect(request.args.get('next') or url_for("posts"))
