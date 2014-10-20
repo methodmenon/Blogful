@@ -47,10 +47,18 @@ def posts(page=1, paginate_by=10):
 		total_pages=total_pages
 		)
 
+"""
+login_required decorator will be used to protect the resources which require authentication
+--> used here to prevent unauthorized users from adding posts, so edit views to include the decorator
+"""
+from flask.ext.login import login_required
+
 """ New view created to display the form, structured in add_post.html"""
 
 #methods["GET"] parameter in route decorator - specifies the route with ONLY BE USED for GET requests to the page
 @app.route("/post/add", methods=["GET"])
+#login_required decorator - used here to prevent unauthorized users from accessing the form
+@login_required
 def add_post_get():
 	return render_template("add_post.html")
 
@@ -58,6 +66,8 @@ def add_post_get():
 
 #methods["POST"] paramter in route decorator - specifies the route will ONLY ACCEPT POST requests
 @app.route("/post/add", methods=["POST"])
+#login_required decorator - used here to prevent a user from manually constructing the form data, and sending it to the POST endpoint
+@login_required
 def add_post_post():
 	#create a new Post object
 	post = Post(

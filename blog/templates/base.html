@@ -26,6 +26,18 @@
 
     <body>
         <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <!-- Code added to show to the user, the flash function error message under login_post located in views.py -->
+        <!-- call the get_flashed_messages function, telling it to also give categories with the messages -->
+        <!-- then loop through the messages, creating a new alert for each one -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}}">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
