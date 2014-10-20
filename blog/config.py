@@ -14,3 +14,4 @@ class DevelopmentConfig(object):
 	Not good ide to store key in application configuration,
 	use os.environ.get to obtain the secret key from an environmental variable
 	"""
+

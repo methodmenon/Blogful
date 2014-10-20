@@ -21,3 +21,4 @@ def load_user(id):
 	1) How to access an object representing a user, via their id
 	"""
 	return session.query(User).get(int(id))
+	

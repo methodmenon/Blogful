@@ -77,7 +77,7 @@ def adduser():
     while not (password and password_2) or password != password_2:
          password = getpass("Password: ")
          password_2 = getpass("Re-enter password: ")
-    user = User(name=name, eamil=email,
+    user = User(name=name, email=email,
         password=generate_password_hash(password))
     """
         generate_password_hash function: 

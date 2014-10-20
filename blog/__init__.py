@@ -19,5 +19,9 @@ app.config.from_object(config_path)
 1) imports come after app creation sine both views.py and filters.py files 
    make use of the app object, so need importing after object has been created
 '''
+#secret key issue because of runtime error not explained by thinkful
+app.secret_key = '1234cheese'
+
 import views
 import filters
+import login
