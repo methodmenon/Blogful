@@ -10,19 +10,9 @@ from database import Base, engine
 
 from flask.ext.login import UserMixin
 
-#create a new class, which inherits from the declaritive base object
-class Post(Base):
-	#give model a table name
-	__tablename__ = "posts"
+from sqlalchemy import ForeignKey
 
-	#primary key id column
-	id = Column(Integer, Sequence("post_id_sequence"), primary_key=True)
-	#column for title of the post
-	title = Column(String(1024))
-	#column for the content of the post
-	content = Column(Text)
-	#date and time the post was created
-	datetime = Column(DateTime, default=datetime.datetime.now)
+from sqlalchemy.orm import relationship
 
 #for our user model, create a new class for Users, which inherits from
 ## 1) the declarative base object
@@ -37,6 +27,24 @@ class User(Base, UserMixin):
 	#email address - unique, because it will be used to identify a user
 	email = Column(String(128), unique=True)
 	password = Column(String(128))
+	#add a one->many relationship with the User(one) model and the Post(many) model
+	posts = relationship("Post", backref="author")
+
+#create a new class, which inherits from the declaritive base object
+class Post(Base):
+	#give model a table name
+	__tablename__ = "posts"
+
+	#primary key id column
+	id = Column(Integer, Sequence("post_id_sequence"), primary_key=True)
+	#column for title of the post
+	title = Column(String(1024))
+	#column for the content of the post
+	content = Column(Text)
+	#date and time the post was created
+	datetime = Column(DateTime, default=datetime.datetime.now)
+	author_id = Column(Integer, ForeignKey('users.id'))
+
 
 #use the following function to create the table in the database
 Base.metadata.create_all(engine)
