@@ -64,6 +64,8 @@ def add_post_get():
 
 """New view created to take our form data and create a new post"""
 
+from flask.ext.login import current_user
+
 #methods["POST"] paramter in route decorator - specifies the route will ONLY ACCEPT POST requests
 @app.route("/post/add", methods=["POST"])
 #login_required decorator - used here to prevent a user from manually constructing the form data, and sending it to the POST endpoint
@@ -76,7 +78,10 @@ def add_post_post():
 		#preprocess the content using mistune, a Markdown parser
 		# --> allows one to Markdown syntax in posts, making it simpler to write well formatted blog posts
 		content=mistune.markdown(request.form["content"]),
-		)
+		#current_user variable from Flask-Login to set the author attribute
+		#--> add {{post.author.name}} to the metadata div in macros.html
+		author=current_user
+	)
 	#add post to our session and commit to database
 	session.add(post)
 	session.commit()
