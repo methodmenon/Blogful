@@ -150,3 +150,13 @@ def login_post():
 	2) there is a next paramter in the URL's query string --> we redirect to that page 
 	"""
 	return redirect(request.args.get('next') or url_for("posts"))
+
+from flask.ext.login import logout_user
+
+#function for logging out of blog
+@app.route("/logout")
+@login_required
+def log_out():
+	logout_user()
+	flash("You have logged out")
+	return redirect(url_for("login_get"))

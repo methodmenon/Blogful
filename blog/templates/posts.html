@@ -6,6 +6,16 @@
 <!--start the content block -->
 {% block content %}
 
+<h4>
+	<a href="{{url_for('login_get')}}">Log In</a>
+</h4>
+
+<h4>
+	<a href="{{url_for('log_out')}}">Log Out</a>
+</h4>
+<h3>
+	<a href="{{url_for('add_post_get')}}">Add Post</a>
+</h3>
 <!-- Loop through the posts -->
 {% for post in posts %}
 <!-- rendering each one using the render_post macro -->
@@ -13,11 +23,9 @@
 <!-- End the loop -->
 {% endfor %}
 
-<ul class="add-post">
-	<li>
-		<a href="{{url_for('add_post_get')}}">Add Post</a>
-	</li>
-</ul>
+<h3>
+	<a href="{{url_for('add_post_get')}}">Add Post</a>
+</h3>
 
 <!-- Adjusted posts.html template to display some buttons which will direct us to the next and previous pages -->
 <ul class="pager">
