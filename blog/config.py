@@ -15,3 +15,13 @@ class DevelopmentConfig(object):
 	use os.environ.get to obtain the secret key from an environmental variable
 	"""
 
+"""
+class pointed to from CONFIG_PATH environmental variable in test_filter.py
+"""
+class TestingConfig(object):
+	#set location of testing database
+	SQLALCHEMY_DATABASE_URI = "sqlite:///blog-testing.db"
+	#debug mode turned off
+	DEBUG = False
+	#no need for secret key
+	SECRET_KEY = "Not Secret"
