@@ -14,6 +14,11 @@ from blog import app
 from blog import models
 from blog.database import Base, engine, session
 
+"""
+Acceptance test for our login system:
+Make sure that when a user visits /login and enter a username and password,
+they are logged in if they enter the correct values, or asked to try again if they enter the incorrect values
+"""
 class TestViews(unittest.TestCase):
 	def setUp(self):
 		"""Test setup"""
@@ -65,3 +70,4 @@ class TestViews(unittest.TestCase):
 
 if __name__ == "__main__":
 	unittest.main()
+
